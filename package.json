@@ -23,6 +23,6 @@
     "phantomjs": "^1.9.19"
   },
   "dependencies": {
-    "debug": "^2.2.0"
+    "debug": "^2.6.9"
   }
 }
