@@ -2,7 +2,6 @@
 
 'use strict';
 
-
 var HeadlessError   = require('./headless_error');
 var http            = require('http');
 var spawn           = require('child_process').spawn;
@@ -12,6 +11,7 @@ var path            = require('path');
 var debug           = require('debug');
 
 var POLL_INTERVAL   = process.env.POLL_INTERVAL || 500;
+var bridgeDefaults = { host: '127.0.0.1', port: '0' };
 
 var logger = {
   debug: debug('node-phantom-simple:debug'),
@@ -134,7 +134,8 @@ exports.create = function (options, callback) {
       });
     }
 
-    args = args.concat([ path.join(__dirname, 'bridge.js') ]);
+    var bridgeOptions = Object.assign(bridgeDefaults, options.bridge || {});
+    args = args.concat([ path.join(__dirname, 'bridge.js'), bridgeOptions.host, bridgeOptions.port ]);
 
     var phantom = spawn(options.path, args);
 
